@@ -10,10 +10,14 @@
     "tsdns"
   ],
   "author": "nathan.rodram@gmail.com",
-  "license": "MIT",
+  "license": "GPL2",
   "dependencies": {
     "express": "3.*",
     "sqlite3": "*"
-  }
+  },
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/nathanrod/nodejs-tsdns.git"
+}
 
 }
