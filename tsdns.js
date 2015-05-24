@@ -1,3 +1,4 @@
+"use strict";
 var net = require('net');
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./tsdns.sqlite');
@@ -11,7 +12,7 @@ var tsdns = net.createServer(function (socket) {
         };
         var freeTimeout = setTimeout(function() {
            writeEnd('404');
-        }, 60000); //Timeout for freeing connection-count
+        }, 60000);
         socket.on('data', function(data) {
             domain = data.toString().replace(/\r|\n/g, '');
             db.all("SELECT * FROM zones WHERE zone=?",domain, function(err, rows){
@@ -34,11 +35,10 @@ var tsdns = net.createServer(function (socket) {
                 }
             }
         })
-        socket.on('error', function(error) {}); //Blackhole all Errors
+        socket.on('error', function(error) {});
     });
     tsdns.on('close', function() {
-        if(typeof databaseConnection.close=="function") databaseConnection.close();
-        log('Stopped MySQL-TSDNS-SERVER for Teamspeak 3');
+        db.close();
     })
 
 module.exports = tsdns;

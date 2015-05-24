@@ -1,4 +1,4 @@
-
+"use strict";
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('tsdns.sqlite');
 var express = require('express');
