@@ -6,7 +6,7 @@ var app = express();
 var config = require('./config.json');
 
 db.serialize(function() {
-  db.run("CREATE TABLE IF NOT EXISTS zones (id integer primary key, zone varchar(100),target varchar(39))");
+  db.run("CREATE TABLE IF NOT EXISTS zones (id integer primary key, zone varchar(100),target varchar(50))");
 });
 
 app.get('/list', function (req, res) {
