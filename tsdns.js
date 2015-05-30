@@ -14,7 +14,7 @@ var tsdns = net.createServer(function (socket) {
            writeEnd('404');
         }, 60000);
         socket.on('data', function(data) {
-            domain = data.toString().replace(/\r|\n/g, '');
+            var domain = data.toString().replace(/\r|\n/g, '');
             db.all("SELECT * FROM zones WHERE zone=?",domain, function(err, rows){
                 if( err ){
                     console.log(err);
@@ -29,7 +29,7 @@ var tsdns = net.createServer(function (socket) {
            
         });
         socket.on('close', function() {
-            for (i in sockets) {
+            for (var i in sockets) {
                 if (sockets[i] === socket) {
                     sockets.splice(i, 1);
                 }
