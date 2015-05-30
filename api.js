@@ -16,6 +16,7 @@ app.get('/list', function (req, res) {
       res.send('{"result":"success","message":' + JSON.stringify( rows ) + '}');
     });
   }else{
+    res.statusCode = 403;
     res.send('{"result":"error","message":"Invalid auth token"}');
   }
 });
@@ -28,8 +29,10 @@ app.get('/add/:zone/:target', function (req, res) {
     var stmt = db.prepare(sql,zone,target);
     stmt.run();
     stmt.finalize();
+    res.statusCode = 201;
     res.send('{result:"success"}');
   }else{
+    res.statusCode = 403;
     res.send('{"result":"error","message":"Invalid auth token"}');
   }
 });
@@ -41,8 +44,10 @@ app.get('/del/:zone', function (req, res) {
     var stmt = db.prepare(sql,zone);
     stmt.run();
     stmt.finalize();
+    res.statusCode = 202;
     res.send('{result:"success"}');
   }else{
+    res.statusCode = 403;
     res.send('{"result":"error","message":"Invalid auth token"}');
   }
 });
@@ -51,9 +56,11 @@ app.get('/get/:zone', function (req, res) {
   if( req.headers.authorization == config.api_key ){
     var zone = req.params.zone;
     db.all("SELECT * FROM zones WHERE zone=?",zone, function(err, row) {
+      res.statusCode = 200;
       res.send('{"result":"success","message":' + JSON.stringify( row ) + '}');
     });
   }else{
+    res.statusCode = 403;
     res.send('{"result":"error","message":"Invalid auth token"}');
   }
 });
